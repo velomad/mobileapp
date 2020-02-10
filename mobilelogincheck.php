@@ -11,12 +11,14 @@ if(isset($_POST['submit'])){
     $query = "SELECT * FROM PROJECTS WHERE school_id = '$schoolId' && school_password = '$schoolPass' ";
 
     $result = mysqli_query($conn, $query);
-
+    
     $num = mysqli_fetch_assoc($result);
 
     if($num > 0){
         $_SESSION['schoolid'] = $schoolId;
-        header('Location:mobiledashboard.php?id='.$schoolId);
+        $_SESSION['projectid'] = $num['id'];
+    
+        header('Location:mobiledashboard.php');
     }else{
         header('location:mobileindex.php');
     }

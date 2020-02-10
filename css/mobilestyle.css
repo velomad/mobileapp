@@ -9,9 +9,14 @@ a{
 
 .student-card {
     text-decoration: none;
+    
     color: black;
 }
 
 a:hover{
     text-decoration: none;
+}
+
+body{
+    background-color:chartreuse ;
 }

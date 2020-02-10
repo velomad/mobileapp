@@ -3,9 +3,12 @@
 session_start();
 include('db.php');
 
-$query = 'SELECT * FROM projects';
+// $id = isset($_GET['id']) ? $_GET['id'] : '';
+
+$query = "SELECT * FROM items WHERE project_id=". $_SESSION['projectid'];
 
 $result = mysqli_query($conn, $query);
+
 
 if($_SESSION['schoolid']){
 ?>
@@ -28,6 +31,10 @@ if($_SESSION['schoolid']){
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -68,13 +75,15 @@ if($_SESSION['schoolid']){
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="firstname" id="inputPassword" placeholder="First Name" required>
+                    <input type="text" class="form-control" name="firstname" id="inputPassword" placeholder="First Name"
+                        required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="lastname" id="inputPassword" placeholder="Last Name" required>
+                    <input type="text" class="form-control" name="lastname" id="inputPassword" placeholder="Last Name"
+                        required>
                 </div>
             </div>
 
@@ -123,7 +132,8 @@ if($_SESSION['schoolid']){
             <div class="form-group row">
                 <label for="inputNumber" class="col-sm-2 col-form-label">Phone No.</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" name="phonenumber" id="inputPassword" placeholder="Phone Number" required>
+                    <input type="number" class="form-control" name="phonenumber" id="inputPassword"
+                        placeholder="Phone Number" max="5" required>
                 </div>
             </div>
 
@@ -131,86 +141,64 @@ if($_SESSION['schoolid']){
                 <p>Size Info</p>
             </div>
 
+            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <div class="card  text-dark mt-5">
+                <div class="card-body">
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
+                <label for="exampleFormControlSelect1"><?php echo $row['item_name'] ?> </label>
                 <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value="Select Size">Select Size</option>
+                    <?php for($i=1;$i<=15;$i++){ 
+                       if($row['s'.$i]!=0){?>
+                    <option>
+                        <?php 
+                            echo $row['s'.$i] ?>
+                    </option>
+                    <?php } 
+                        } ?>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
+            
+            <label for="selectquantity">Select Quantity : </label>
+            <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;">
             </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
             </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-        <button class="btn btn-primary" name="submit">Submit</button>
+            <?php } ?>
+            
+            <button class="btn btn-primary mt-3" name="submit">Submit</button>
         </form>
     </div>
+                     <!-- <div class="qty mt-5">
+                        <span class="minus bg-dark">-</span>
+                        <input type="number" class="count" name="qty" value="1">
+                        <span class="plus bg-dark">+</span>
+                    </div>
 
+                    <div class="qty mt-5">
+                        <span class="minus1 bg-dark">-</span>
+                        <input type="number" class="count1" name="qty" value="1">
+                        <span class="plus1 bg-dark">+</span>
+                    </div> -->
+
+
+                <script>
+
+
+
+        //  $(document).ready(function(){
+		//     $('.count1').prop('disabled', true);
+   		// 	$(document).on('click','.plus1',function(){
+		// 		$('.count1').val(parseInt($('.count1').val()) + 1 );
+    	// 	});
+        // 	$(document).on('click','.minus1',function(){
+    	// 		$('.count1').val(parseInt($('.count1').val()) - 1 );
+    	// 			if ($('.count1').val() == 0) {
+		// 				$('.count1').val(1);
+		// 			}
+    	//     	});
+ 		// });
+
+                </script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="jquery-3.4.1.min.js"></script>
