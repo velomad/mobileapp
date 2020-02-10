@@ -145,7 +145,7 @@ if($_SESSION['schoolid']){
             <div class="card  text-dark mt-5">
                 <div class="card-body">
             <div class="form-group">
-                <label for="exampleFormControlSelect1"><?php echo $row['item_name'] ?> </label>
+                <label for="exampleFormControlSelect1">Select <?php echo $row['item_name'] ?> </label>
                 <select class="form-control" id="exampleFormControlSelect1">
                     <option value="Select Size">Select Size</option>
                     <?php for($i=1;$i<=15;$i++){ 
