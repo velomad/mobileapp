@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
     $gender = $_POST['gender'];
     $selectstandard = $_POST['selectstandard'];
     $selecthouse = $_POST['selecthouse'];
-    $phonenumber = $_POST['phonenumber'];
+    $phonenumber = $_POST['phonenumber'];   
 }
 
 $sql = "INSERT INTO studentinfo (firstname, lastname, gender, selectstandard, selecthouse, phonenumber)

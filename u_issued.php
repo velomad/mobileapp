@@ -31,6 +31,27 @@ if($_SESSION['schoolid']){
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style>
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
 </head>
 
 <body>
@@ -64,34 +85,73 @@ if($_SESSION['schoolid']){
 
 
         <div class="text-left mt-3">
-            <input class="form-control mr-sm-2" type="search" placeholder="Name" aria-label="Search">
-            <button class="btn btn-outline-success  my-2 my-sm-2 " type="submit">Search Student</button>
+            <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search Student Name" aria-label="Search" autofocus>
         </div>
+
+        <table class="mt-3">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Standard</th>
+    <th>House</th>
+    <th>Phone Number</th>
+    <th>View Info</th>
+  </tr>
+  </thead>
+  <tbody id="myTable">
+
         <?php
         if(mysqli_num_rows($result2) > 0){
+            $numCount = 0;
             while($row = mysqli_fetch_assoc($result2)){
+
+                $numCount ++;
+
             ?>
-        <a class="student-card" href="student_info.php">
-            <div class="card mt-3">
-                <div class="card-header">
-                    <p>Name : <?php echo $row['firstname']; echo $row['lastname']; ?></p>
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote">
-                        <p>Phone No : <?php echo $row['phonenumber'] ?></p>
-                    </blockquote>
-                </div>
-            </div>
-        </a>
+        
+                
+  <tr>
+    <td><?php echo $numCount ?></td>
+    <td><?php echo $row['firstname']; echo " "; echo $row['lastname']; ?></td>
+    <td><?php echo $row['gender'] ?></td>
+    <td><?php echo $row['selectstandard'] ?></td>
+    <td><?php echo $row['selecthouse'] ?></td>
+    <td><?php echo $row['phonenumber'] ?></td>
+ <td><a href="student_info.php?id=<?php echo $row['id'] ?>"><input type="button" class="btn btn-primary" value="View"></a></td> 
+  </tr>
         <?php } 
+
+
                 }
                else{
                    echo "0 result";
                }     
             ?>
+
+</tbody>
+</a>
+
+</table>
+
+  
     </div>
 
 
+<script>
+    $(document).ready(function(){
+  $("#search").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+
+
+
+</script>
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="jquery-3.4.1.min.js"></script>
 

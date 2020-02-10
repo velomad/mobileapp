@@ -75,14 +75,14 @@ if($_SESSION['schoolid']){
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="firstname" id="inputPassword" placeholder="First Name"
+                    <input type="text" class="form-control" name="firstname" id="inputFirstName" placeholder="First Name"
                         required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="lastname" id="inputPassword" placeholder="Last Name"
+                    <input type="text" class="form-control" name="lastname" id="inputLastName" placeholder="Last Name"
                         required>
                 </div>
             </div>
@@ -132,8 +132,8 @@ if($_SESSION['schoolid']){
             <div class="form-group row">
                 <label for="inputNumber" class="col-sm-2 col-form-label">Phone No.</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" name="phonenumber" id="inputPassword"
-                        placeholder="Phone Number" max="5" required>
+                    <input type="tel" class="form-control" name="phonenumber" 
+                        placeholder="Phone Number"  required>
                 </div>
             </div>
 
@@ -160,12 +160,21 @@ if($_SESSION['schoolid']){
             </div>
             
             <label for="selectquantity">Select Quantity : </label>
-            <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;">
+            <!-- <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;"> -->
+
+            <div class="contain">
+<input type="text" name="qty" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
+<div class="button-container mt-2">
+    <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
+		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
+</div>
+</div>
+
             </div>
             </div>
             <?php } ?>
             
-            <button class="btn btn-primary mt-3" name="submit">Submit</button>
+            <button class="btn btn-primary mt-3 mb-3" name="submit">Submit</button>
         </form>
     </div>
                      <!-- <div class="qty mt-5">
@@ -197,7 +206,30 @@ if($_SESSION['schoolid']){
 		// 			}
     	//     	});
  		// });
+         var incrementPlus;
+var incrementMinus;
 
+var buttonPlus  = $(".cart-qty-plus");
+var buttonMinus = $(".cart-qty-minus");
+
+var incrementPlus = buttonPlus.click(function() {
+	var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	$n.val(Number($n.val())+1 );
+});
+
+var incrementMinus = buttonMinus.click(function() {
+		var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	var amount = Number($n.val());
+	if (amount > 0) {
+		$n.val(amount-1);
+	}
+});
                 </script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
