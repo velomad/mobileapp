@@ -76,14 +76,14 @@ if($_SESSION['schoolid']){
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="firstname" id="inputFirstName" placeholder="First Name"
-                        required>
+                        required autocomplete="off">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="lastname" id="inputLastName" placeholder="Last Name"
-                        required>
+                        required autocomplete="off">
                 </div>
             </div>
 
@@ -133,7 +133,7 @@ if($_SESSION['schoolid']){
                 <label for="inputNumber" class="col-sm-2 col-form-label">Phone No.</label>
                 <div class="col-sm-10">
                     <input type="tel" class="form-control" name="phonenumber" 
-                        placeholder="Phone Number"  required>
+                        placeholder="Phone Number"  required autocomplete="off">
                 </div>
             </div>
 
@@ -173,8 +173,7 @@ if($_SESSION['schoolid']){
             </div>
             </div>
             <?php } ?>
-            
-            <button class="btn btn-primary mt-3 mb-3" name="submit">Submit</button>
+            <button name="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
         </form>
     </div>
                      <!-- <div class="qty mt-5">

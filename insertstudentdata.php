@@ -18,8 +18,8 @@ if(isset($_POST['submit'])){
     $phonenumber = $_POST['phonenumber'];   
 }
 
-$sql = "INSERT INTO studentinfo (firstname, lastname, gender, selectstandard, selecthouse, phonenumber)
- VALUES ('$firstname', '$lastname', '$gender', '$selectstandard', '$selecthouse', '$phonenumber')";
+$sql = "INSERT INTO studentinfo (schoolid ,firstname, lastname, gender, selectstandard, selecthouse, phonenumber)
+ VALUES ('{$_SESSION['projectid']}','$firstname', '$lastname', '$gender', '$selectstandard', '$selecthouse', '$phonenumber')";
 
 mysqli_query($conn, $sql);
 

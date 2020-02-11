@@ -4,7 +4,7 @@ session_start();
 include('db.php');
 
 $query = 'SELECT * FROM projects';
-$sql = 'SELECT * FROM studentinfo';
+$sql = "SELECT * FROM studentinfo WHERE schoolid = ".$_SESSION['projectid'];
 
 $result = mysqli_query($conn, $query);
 $result2 = mysqli_query($conn, $sql);
