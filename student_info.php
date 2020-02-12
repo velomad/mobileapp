@@ -6,14 +6,16 @@ include('db.php');
 $id = $_GET['id'];
 
 $sql = "SELECT * FROM studentinfo WHERE id = $id ";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
 
 $sql2 = "SELECT * FROM items WHERE project_id=". $_SESSION['projectid'];
-
 $result2 = mysqli_query($conn, $sql2);
 
-$result = mysqli_query($conn, $sql);
+$sql3 = "SELECT * FROM sizeinfo WHERE project_id =". $_SESSION['projectid'];
 
-$row = mysqli_fetch_assoc($result);
+
 
 if($_SESSION['schoolid']){
 ?>
@@ -74,7 +76,7 @@ if($_SESSION['schoolid']){
             <p>General Info</p>
         </div>
 
-        <form class="distribution-form">
+        <form class="distribution-form" method="POST" action="issueuniform.php">
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
@@ -165,13 +167,24 @@ if($_SESSION['schoolid']){
             </div>
             </div>
             <?php } ?>
+
+        <?php 
+
+
+        
+        ?>
             
         <div class="btns mt-3 mb-3">
+
         <input type="button" class="btn btn-warning" id="editBtn" value="EDIT">
-        <input type="button" class="btn btn-primary" id="issueBtn" value="ISSUE">
+        <button name="update" class="btn btn-primary">UPDATE</button>
+        <button name="submit" class="btn btn-success">ISSUE</button>
+
+
         </div>
         </form>
     </div>
+
 
 <script>
     $(document).ready(function(){
@@ -185,6 +198,32 @@ if($_SESSION['schoolid']){
             $("#phoneNumber").removeAttr("readonly");
         });
     });
+
+
+    var incrementPlus;
+var incrementMinus;
+
+var buttonPlus  = $(".cart-qty-plus");
+var buttonMinus = $(".cart-qty-minus");
+
+var incrementPlus = buttonPlus.click(function() {
+	var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	$n.val(Number($n.val())+1 );
+});
+
+var incrementMinus = buttonMinus.click(function() {
+		var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	var amount = Number($n.val());
+	if (amount > 0) {
+		$n.val(amount-1);   
+	}
+});
 </script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->

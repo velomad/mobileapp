@@ -40,3 +40,61 @@ CREATE TABLE `studentinfo` (
  PRIMARY KEY (`id`),
   FOREIGN KEY (schoolid) REFERENCES projects (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1
+
+
+create TABLE sizeinfo (
+id int(11) AUTO_INCREMENT PRIMARY KEY NOT null,
+    stud_id int(11),
+    item_name varchar(255) not null,
+    size int(11) not null,
+    quantity int(11) not null,
+    FOREIGN key (stud_id) REFERENCES studentinfo (id)
+);
+
+
+$sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ('$id','$itemname','$selectsize','$quantity')";
+
+<!-- mutiinsert rows using single query -->
+
+$sqlInsert   = '';
+$countOfData = count($splitLabel);
+for ($i = 0; $i < $countOfData; $i++){
+    $sqlInsert .= "('{$last_id}', '{$splitLabel[$i]}'),";
+}
+$sqlInsert = rtrim($sqlInsert, ',');//remove the extra comma
+if ($sqlInsert) {
+    $sql = "INSERT INTO label (item_id, label) VALUES {$sqlInsert} ;";
+    $result = mysqli_query($conn, $sql);
+}
+
+
+
+<?php
+
+// an array items to insert
+$array = array( 'dingo'       => 'A native dog',
+        'wombat'      => 'A native marsupial',
+        'platypus'    => 'A native monotreme',
+        'koala'       => 'A native Phascolarctidae'
+        );
+
+// begin the sql statement
+$sql = "INSERT INTO test_table (name, description ) VALUES ";
+
+// this is where the magic happens
+$it = new ArrayIterator( $array );
+
+// a new caching iterator gives us access to hasNext()
+$cit = new CachingIterator( $it );
+
+// loop over the array
+foreach ( $cit as $value )
+{
+    // add to the query
+    $sql .= "('".$cit->key()."','" .$cit->current()."')";
+    // if there is another array member, add a comma
+    if( $cit->hasNext() )
+    {
+        $sql .= ",";
+    }
+}

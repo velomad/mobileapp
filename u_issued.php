@@ -85,7 +85,7 @@ tr:nth-child(even) {
 
 
         <div class="text-left mt-3">
-            <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search Student Name" aria-label="Search" autofocus>
+            <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search Student Name" aria-label="Search" autofocus autocomplete="off">
         </div>
 
         <table class="mt-3">
