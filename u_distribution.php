@@ -152,8 +152,8 @@ if($_SESSION['schoolid']){
             <div class="card  text-dark mt-5">
                 <div class="card-body">
             <div class="form-group">
-                <label for="exampleFormControlSelect1"><?php echo $row['item_name'] ?> </label>
-                <select class="form-control" name="selectsize" id="exampleFormControlSelect1">
+                <label for="exampleFormControlSelect1" name="studitem[]"><?php echo $row['item_name'] ?> </label>
+                <select class="form-control" name="selectsize[]" id="exampleFormControlSelect1">
                     <option value="Select Size">Select Size</option>
                     <?php for($i=1;$i<=15;$i++){ 
                        if($row['s'.$i]!=0){?>
@@ -170,7 +170,7 @@ if($_SESSION['schoolid']){
             <!-- <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;"> -->
 
             <div class="contain">
-<input type="text" name="quantity" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
+<input type="text" name="quantity[]" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
 <div class="button-container mt-2">
     <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
 		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>

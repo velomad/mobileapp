@@ -20,7 +20,8 @@ $row = mysqli_num_rows($result);
 
 // while($row = mysqli_fetch_assoc($result)){
 //     $itemname = $row['item_name'];
-//     print_r($itemname , +' '); 
+// print_r($itemname);
+
 // }
 
 
@@ -36,7 +37,7 @@ if($schoolprofile == true){
 
 
 if(isset($_POST['submit'])){
-    $id = $_POST['id'];
+    $id = $_POST['id']; 
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $gender = $_POST['gender'];
@@ -45,11 +46,21 @@ if(isset($_POST['submit'])){
     $phonenumber = $_POST['phonenumber'];
 
     
-
     $selectsize = $_POST['selectsize'];
     $quantity = $_POST['quantity'];
 
-    
+
+    // while($row = mysqli_fetch_assoc($result)){
+//     $itemname = $row['item_name'];
+// print_r($itemname);
+
+foreach($data = mysqli_fetch_assoc($result) as $key => $value){
+    print_r($data['item_name']);
+}
+
+exit();
+
+
 }
 
 $sql2 = "INSERT INTO studentinfo (schoolid ,firstname, lastname, gender, selectstandard, selecthouse, phonenumber)
@@ -57,13 +68,20 @@ $sql2 = "INSERT INTO studentinfo (schoolid ,firstname, lastname, gender, selects
 
 mysqli_query($conn, $sql2);
 
-$sqlInsert = '';
 
+$sqlInsert = '';
 for($i = 0; $i < $row; $i++){
-    while($data = mysqli_fetch_assoc($result)){
-        $loopedname = $data['item_name'];
-    $sqlInsert .= "('{$id}','{$loopedname}','{$selectsize}','{$quantity}'),";
+
+    // foreach($data = mysqli_fetch_assoc($result) as $key => $value){
+    //     echo $data;
+    // }
+
+    // exit();
+        
+        foreach ($selectsize AS $key => $value) {
+    $sqlInsert .= "('{$id}','{$loopedname2}','{$value}','{$quantity[$key]}'),";
     }
+
 }
 $sqlInsert = rtrim($sqlInsert, ',');
 
@@ -72,6 +90,16 @@ $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES {$sqlI
     mysqli_query($conn, $sql3);
 }
 
+
+// foreach ($selectsize as $key => $value) {
+//     $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ('" 
+//     . $conn->real_escape_string($id)."','"
+//     . $conn->real_escape_string($loopedname)."','"
+//     . $conn->real_escape_string($value)."','"
+//     . $conn->real_escape_string($quantity[$key])."')";
+// }
+
+// mysqli_query($conn, $sql3);
 
 
 header('Location:u_distribution.php');
