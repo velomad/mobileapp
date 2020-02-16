@@ -3,10 +3,6 @@
 session_start();
 include('db.php');
 
-$query = 'SELECT * FROM projects';
-
-$result = mysqli_query($conn, $query);
-
 if($_SESSION['schoolid']){
 ?>
 <!DOCTYPE html>
@@ -64,7 +60,7 @@ if($_SESSION['schoolid']){
       <button class="btn btn-outline-success  my-2 my-sm-2 " type="submit">Search Student</button>
     </div>
 
-    <a class="student-card" href="student_info.php">
+    <a class="student-card" href="distributed_info.php">
       <div class="card">
         <div class="card-header">
           <p>Name : Sagar Chavan</p>

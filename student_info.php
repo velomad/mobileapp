@@ -3,9 +3,19 @@
 session_start();
 include('db.php');
 
-$query = 'SELECT * FROM projects';
+$id = $_GET['id'];
 
-$result = mysqli_query($conn, $query);
+$sql = "SELECT * FROM studentinfo WHERE id = $id ";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+
+$sql2 = "SELECT * FROM items WHERE project_id=". $_SESSION['projectid'];
+$result2 = mysqli_query($conn, $sql2);
+
+$sql3 = "SELECT * FROM sizeinfo WHERE project_id =". $_SESSION['projectid'];
+
+
 
 if($_SESSION['schoolid']){
 ?>
@@ -28,6 +38,8 @@ if($_SESSION['schoolid']){
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -64,38 +76,33 @@ if($_SESSION['schoolid']){
             <p>General Info</p>
         </div>
 
-        <form class="distribution-form">
+        <form class="distribution-form" method="POST" action="issueuniform.php">
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword" placeholder="First Name">
+                    <input type="text" class="form-control" id="inputFirstName" value="<?php echo $row['firstname'] ?>" placeholder="First Name" readonly>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">Last Name</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword" placeholder="Last Name">
+                    <input type="text" class="form-control" id="inputLastName" value="<?php echo $row['lastname'] ?>" placeholder="Last Name" readonly>
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                </div>
-            </div>
+
 
             <div class="text-left">
                 <p>Select Gender</p>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="gender" disabled="disabled" <?php if($row['gender'] == 'Male'){ ?> checked <?php } ?>>
                 <label class="form-check-label" for="exampleRadios1">
                     Male
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="gender2"  disabled="disabled" <?php if($row['gender'] == 'Female'){ ?> checked <?php } ?>>
                 <label class="form-check-label" for="exampleRadios2">
                     Female
                 </label>
@@ -104,30 +111,23 @@ if($_SESSION['schoolid']){
 
             <div class="form-group mt-3">
                 <label for="exampleFormControlSelect1">Select Standard</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <select class="form-control" id="selectStandard" readonly>
+                    <option><?php echo $row['selectstandard'] ?></option>
+                    
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <select class="form-control" id="selectHouse" readonly>
+                    <option><?php echo $row['selecthouse'] ?></option>
                 </select>
             </div>
 
             <div class="form-group row">
                 <label for="inputNumber" class="col-sm-2 col-form-label">Phone No.</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputPassword" placeholder="Phone Number">
+                    <input type="number" id="phoneNumber" class="form-control" value="<?php echo $row['phonenumber'] ?>" placeholder="Phone Number" readonly>
                 </div>
             </div>
 
@@ -135,88 +135,96 @@ if($_SESSION['schoolid']){
                 <p>Size Info</p>
             </div>
 
+            <?php while($row = mysqli_fetch_assoc($result2)) { ?>
+            <div class="card  text-dark mt-5">
+                <div class="card-body">
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
+                <label for="exampleFormControlSelect1"><?php echo $row['item_name'] ?> </label>
                 <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value="Select Size">Select Size</option>
+                    <?php for($i=1;$i<=15;$i++){ 
+                       if($row['s'.$i]!=0){?>
+                    <option>
+                        <?php 
+                            echo $row['s'.$i] ?>
+                    </option>
+                    <?php } 
+                        } ?>
                 </select>
             </div>
+            
+            <label for="selectquantity">Select Quantity : </label>
+            <!-- <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;"> -->
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
+            <div class="contain">
+<input type="text" name="qty" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
+<div class="button-container mt-2">
+    <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
+		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
+</div>
+</div>
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
             </div>
+            </div>
+            <?php } ?>
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
+        <?php 
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
+        
+        ?>
+            
+        <div class="btns mt-3 mb-3">
 
-            <div class="form-group">
-                <label for="exampleFormControlSelect1">Select House</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-            </div>
-        <button class="btn btn-warning">Edit</button>
-        <button class="btn btn-primary ml-3">Issue</button>
+        <input type="button" class="btn btn-warning" id="editBtn" value="EDIT">
+        <button name="update" class="btn btn-primary">UPDATE</button>
+        <button name="submit" class="btn btn-success">ISSUE</button>
+
+
+        </div>
         </form>
     </div>
 
 
+<script>
+    $(document).ready(function(){
+        $("#editBtn").click(function(){
+            $("#inputFirstName").removeAttr("readonly");
+            $("#inputLastName").removeAttr("readonly");
+            $("#gender").removeAttr("disabled");
+            $("#gender2").removeAttr("disabled");
+            $("#selectStandard").removeAttr("readonly");
+            $("#selectHouse").removeAttr("readonly");
+            $("#phoneNumber").removeAttr("readonly");
+        });
+    });
+
+
+    var incrementPlus;
+var incrementMinus;
+
+var buttonPlus  = $(".cart-qty-plus");
+var buttonMinus = $(".cart-qty-minus");
+
+var incrementPlus = buttonPlus.click(function() {
+	var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	$n.val(Number($n.val())+1 );
+});
+
+var incrementMinus = buttonMinus.click(function() {
+		var $n = $(this)
+		.parent(".button-container")
+		.parent(".contain")
+		.find(".qty");
+	var amount = Number($n.val());
+	if (amount > 0) {
+		$n.val(amount-1);   
+	}
+});
+</script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="jquery-3.4.1.min.js"></script>
