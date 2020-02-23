@@ -10,23 +10,6 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_num_rows($result);
 
 
-// $ri = mysqli_fetch_lengths($result);
-
-// print_r($ri);
-
-// exit();
-
-// $ar = array();
-
-// while($row = mysqli_fetch_assoc($result)){
-//     $itemname = $row['item_name'];
-// print_r($itemname);
-
-// }
-
-
-// exit();
-
 
 $schoolprofile = $_SESSION['schoolid'];
 if($schoolprofile == true){
@@ -45,20 +28,9 @@ if(isset($_POST['submit'])){
     $selecthouse = $_POST['selecthouse'];
     $phonenumber = $_POST['phonenumber'];
 
-    
     $selectsize = $_POST['selectsize'];
     $quantity = $_POST['quantity'];
 
-
-    // while($row = mysqli_fetch_assoc($result)){
-//     $itemname = $row['item_name'];
-// print_r($itemname);
-
-foreach($data = mysqli_fetch_assoc($result) as $key => $value){
-    print_r($data['item_name']);
-}
-
-exit();
 
 
 }
@@ -72,14 +44,11 @@ mysqli_query($conn, $sql2);
 $sqlInsert = '';
 for($i = 0; $i < $row; $i++){
 
-    // foreach($data = mysqli_fetch_assoc($result) as $key => $value){
-    //     echo $data;
-    // }
-
-    // exit();
-        
-        foreach ($selectsize AS $key => $value) {
-    $sqlInsert .= "('{$id}','{$loopedname2}','{$value}','{$quantity[$key]}'),";
+    while($row = mysqli_fetch_assoc($result)){
+        $loopeditemname = $row['item_name'];
+        foreach ($selectsize AS $key => $value ) {
+    $sqlInsert .= "('{$id}','{$loopeditemname}','{$value}','{$quantity[$key]}'),";
+    }
     }
 
 }
