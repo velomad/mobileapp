@@ -27,37 +27,70 @@ if(isset($_POST['submit'])){
     $selectstandard = $_POST['selectstandard'];
     $selecthouse = $_POST['selecthouse'];
     $phonenumber = $_POST['phonenumber'];
+    $row_no=$_POST['itemno'];
 
-    $selectsize = $_POST['selectsize'];
-    $quantity = $_POST['quantity'];
+    // $itemname='itemname';
+    // $selectsize='selectsize';
+    // $quantity='quantity';
+
+    // for($i=1; $i<=$row_no;$i++){
+    //   echo  $itemname.$i;
+    // $itemname.$i=$_POST['itemname'.$i];
+    // $selectsize.$i=$_POST['selectsize'.$i];
+    // $quantity.$i=$_POST['quantity'.$i];
+
+    // }
+   
+    // $selectsize = $_POST['selectsize'];
+    // $quantity = $_POST['quantity'];
 
 
 
 }
+// echo"<pre>";
+// print_r($_POST);
+// exit;
 
 $sql2 = "INSERT INTO studentinfo (schoolid ,firstname, lastname, gender, selectstandard, selecthouse, phonenumber)
  VALUES ('{$_SESSION['projectid']}','$firstname', '$lastname', '$gender', '$selectstandard', '$selecthouse', '$phonenumber')";
 
+
+
 mysqli_query($conn, $sql2);
+    $last_id = mysqli_insert_id($conn);
 
 
-$sqlInsert = '';
-for($i = 0; $i < $row; $i++){
+for($i=1; $i<=$row_no;$i++){
 
-    while($row = mysqli_fetch_assoc($result)){
-        $loopeditemname = $row['item_name'];
-        foreach ($selectsize AS $key => $value ) {
-    $sqlInsert .= "('{$id}','{$loopeditemname}','{$value}','{$quantity[$key]}'),";
-    }
-    }
+    $itemname=$_POST['itemname'.$i];
+    $selectsize=$_POST['selectsize'.$i];
+    $quantity=$_POST['quantity'.$i];
+
+  echo  $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ($last_id, '$itemname', $selectsize, $quantity) ;";
+        mysqli_query($conn, $sql3);
+
+
+
 
 }
-$sqlInsert = rtrim($sqlInsert, ',');
+// exit;
+// $sqlInsert = '';
+// for($i = 0; $i < $row; $i++){
 
-if($sqlInsert){
-$sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES {$sqlInsert} ;";
-    mysqli_query($conn, $sql3);
-}
+    
+//     //     foreach ($selectsize AS $key => $value ) {
+//     // $sqlInsert .= "('{$id}','{".while($row = mysqli_fetch_assoc($result)){
+//     //    echo $loopeditemname = $row['item_name']; }."}','{$value}','{$quantity[$key]}'),";
+//     // }
+//     // }
+
+// }
+// $sqlInsert = rtrim($sqlInsert, ',');
+
+// if($sqlInsert){
+// $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES {$sqlInsert} ;";
+//     mysqli_query($conn, $sql3);
+// }
 
 
 // foreach ($selectsize as $key => $value) {

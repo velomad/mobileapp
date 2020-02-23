@@ -148,12 +148,13 @@ if($_SESSION['schoolid']){
                 <p>Size Info</p>
             </div>
 
-            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <?php $j=1; while($row = mysqli_fetch_assoc($result)) { ?>
             <div class="card  text-dark mt-5">
                 <div class="card-body">
             <div class="form-group">
+            <input type="hidden"  name="itemname<?php echo $j ?>" value="<?php echo $row['item_name'] ?>" >
                 <label for="exampleFormControlSelect1" name="studitem[]"><?php echo $row['item_name'] ?> </label>
-                <select class="form-control" name="selectsize[]" id="exampleFormControlSelect1">
+                <select class="form-control" name="selectsize<?php echo $j ?>" id="exampleFormControlSelect1">
                     <option value="Select Size">Select Size</option>
                     <?php for($i=1;$i<=15;$i++){ 
                        if($row['s'.$i]!=0){?>
@@ -170,7 +171,7 @@ if($_SESSION['schoolid']){
             <!-- <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;"> -->
 
             <div class="contain">
-<input type="text" name="quantity[]" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
+<input type="text" name="quantity<?php echo $j ?>" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
 <div class="button-container mt-2">
     <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
 		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
@@ -179,7 +180,9 @@ if($_SESSION['schoolid']){
 
             </div>
             </div>
-            <?php } ?>
+            <?php $j++; } ?>
+
+            <input type="hidden" name="itemno" value="<?php echo $j-1;?>">
             <button name="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
         </form>
     </div>
