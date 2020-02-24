@@ -128,11 +128,10 @@ if($_SESSION['schoolid']){
                 <label for="exampleFormControlSelect1">Select House</label>
                 <select class="form-control" name="selecthouse" id="exampleFormControlSelect1" required>
                     <option value="none" selected disabled hidden>Select House</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>Red</option>
+                    <option>Green</option>
+                    <option>Blue</option>
+                    <option>Yellow</option>
                 </select>
             </div>
 
@@ -174,7 +173,7 @@ if($_SESSION['schoolid']){
 <input type="text" name="quantity<?php echo $j ?>" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
 <div class="button-container mt-2">
     <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
-		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
+	<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
 </div>
 </div>
 

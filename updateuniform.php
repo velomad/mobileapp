@@ -17,9 +17,10 @@ if(isset($_POST['update'])){
     $selectstandard = $_POST['selectstandard'];
     $selecthouse = $_POST['selecthouse'];
     $phonenumber = $_POST['phonenumber'];
+
 }
 
-$sql = "UPDATE studentinfo SET firstname = '$firstname', lastname = '$lastname', gender = '$gender', selectstandard='$selectstandard', selecthouse='$selecthouse', phonenumber='$phonenumber' WHERE id = '$id'";
+$sql = "UPDATE studentinfo SET firstname = '$firstname', lastname = '$lastname', gender = '$gender', selectstandard='$selectstandard', selecthouse='$selecthouse', phonenumber='$phonenumber' WHERE id =".$id;
 
 mysqli_query($conn, $sql);
 
