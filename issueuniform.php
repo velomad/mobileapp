@@ -9,20 +9,9 @@ if($schoolprofile == true){
     header('Location:mobileindex.php');
 }
 
-if(isset($_POST['update'])){
-    
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $gender = $_POST['gender'];
-    $selectstandard = $_POST['selectstandard'];
-    $selecthouse = $_POST['selecthouse'];
-    $phonenumber = $_POST['phonenumber'];
-}
+echo "issued";
+exit;
 
-$sql = "UPDATE studentinfo SET firstname = '$firstname', lastname = '$lastname', gender = '$gender', selectstandard='$selectstandard', selecthouse='$selecthouse', phonenumber='$phonenumber' WHERE id = '$id'";
-
-mysqli_query($conn, $sql);
-
-header('Location:u_issued.php');
+header('Location:u_distributed.php');
 
 ?>

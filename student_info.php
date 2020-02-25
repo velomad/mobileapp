@@ -76,7 +76,7 @@ if($_SESSION['schoolid']){
             <p>General Info</p>
         </div>
 
-        <form class="distribution-form" method="POST" action="#">
+        <form class="distribution-form" method="POST" action="issueuniform.php">
             <div class="form-group row">
                 <label for="inputText" class="col-sm-2 col-form-label">First Name</label>
                 <div class="col-sm-10">
@@ -177,8 +177,9 @@ if($_SESSION['schoolid']){
             <?php } ?>
             
         <div class="btns mt-3 mb-3">
-        <button name="update" class="btn btn-primary">UPDATE</button>
-        <button class="btn btn-success">ISSUE</button>
+        
+        <a href="updateuniform.php"><input type="button"  value="UPDATE"></a>
+        <a href="issueuniform.php"><input type="button"  value="ISSUE"></a>
 
         </div>
         </form>

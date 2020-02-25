@@ -40,7 +40,7 @@ for($i=1; $i<=$row_no;$i++){
     $selectsize=$_POST['selectsize'.$i];
     $quantity=$_POST['quantity'.$i];
 
-  echo  $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ($last_id, '$itemname', $selectsize, $quantity) ;";
+  echo  $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ($last_id, '$itemname', $selectsize, $quantity);";
         mysqli_query($conn, $sql3);
 }
 
