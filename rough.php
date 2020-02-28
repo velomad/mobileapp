@@ -98,3 +98,22 @@ foreach ( $cit as $value )
         $sql .= ",";
     }
 }
+
+// for subtracting current qty with the value which user issues
+
+$getQty = "SELECT * FROM sizeinfo WHERE stud_id = $last_id";
+$resultQty = mysqli_query($conn, $getQty);
+
+$n = 1;
+while( $roww = mysqli_fetch_assoc($result)){ 
+    while($rowQty = mysqli_fetch_assoc($resultQty)){
+        echo $answer = ($roww['p'.$n] - $rowQty['quantity']);
+    }
+    $n++;
+}
+
+print_r($answer);
+exit;
+
+
+

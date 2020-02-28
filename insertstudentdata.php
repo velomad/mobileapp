@@ -2,31 +2,12 @@
 
 session_start();
 include('db.php');  
-
+$p_Id=$_SESSION['projectid'];
 $sql = "SELECT * FROM items WHERE project_id=" .$_SESSION['projectid'];
 
 $result = mysqli_query($conn, $sql);
 
 $row = mysqli_num_rows($result);
-
-
-// $ri = mysqli_fetch_lengths($result);
-
-// print_r($ri);
-
-// exit();
-
-// $ar = array();
-
-// while($row = mysqli_fetch_assoc($result)){
-//     $itemname = $row['item_name'];
-// print_r($itemname);
-
-// }
-
-
-// exit();
-
 
 $schoolprofile = $_SESSION['schoolid'];
 if($schoolprofile == true){
@@ -34,7 +15,6 @@ if($schoolprofile == true){
 }else{
     header('Location:mobileindex.php');
 }
-
 
 if(isset($_POST['submit'])){
     $id = $_POST['id']; 
@@ -44,63 +24,45 @@ if(isset($_POST['submit'])){
     $selectstandard = $_POST['selectstandard'];
     $selecthouse = $_POST['selecthouse'];
     $phonenumber = $_POST['phonenumber'];
-
-    
-    $selectsize = $_POST['selectsize'];
-    $quantity = $_POST['quantity'];
-
-
-    // while($row = mysqli_fetch_assoc($result)){
-//     $itemname = $row['item_name'];
-// print_r($itemname);
-
-foreach($data = mysqli_fetch_assoc($result) as $key => $value){
-    print_r($data['item_name']);
+    $row_no=$_POST['itemno'];
+   
+   
 }
 
-exit();
-
-
-}
 
 $sql2 = "INSERT INTO studentinfo (schoolid ,firstname, lastname, gender, selectstandard, selecthouse, phonenumber)
  VALUES ('{$_SESSION['projectid']}','$firstname', '$lastname', '$gender', '$selectstandard', '$selecthouse', '$phonenumber')";
 
 mysqli_query($conn, $sql2);
+    $last_id = mysqli_insert_id($conn);
 
+for($i=1; $i<=$row_no;$i++){
 
-$sqlInsert = '';
-for($i = 0; $i < $row; $i++){
+    $itemname=$_POST['itemname'.$i ];
+    $selectsize=$_POST['selectsize'.$i];
+    $quantity=$_POST['quantity'.$i];    
 
-    // foreach($data = mysqli_fetch_assoc($result) as $key => $value){
-    //     echo $data;
-    // }
+    $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ($last_id, '$itemname', $selectsize, $quantity);";
+        mysqli_query($conn, $sql3);
 
-    // exit();
-        
-        foreach ($selectsize AS $key => $value) {
-    $sqlInsert .= "('{$id}','{$loopedname2}','{$value}','{$quantity[$key]}'),";
+        $getPiecesql="select * from items where item_name='$itemname' and project_id=$p_Id  ";
+        $resultGetPiece=mysqli_query($conn, $getPiecesql);
+        $rowPiece=mysqli_fetch_assoc($resultGetPiece);
+    for($j=1;$j<=15;$j++){
+        if($rowPiece['s'.$j] == $selectsize){
+                $p_no=$j;
+                break;
+                
+        }
     }
+    $p="p".$p_no;
+    $oldPieces=$rowPiece['p'.$p_no];
 
+$newQuantity=$oldPieces-$quantity;
+
+$updateSql="update items set $p=$newQuantity where item_name='$itemname' and project_id=$p_Id"  ;
+mysqli_query($conn, $updateSql);
 }
-$sqlInsert = rtrim($sqlInsert, ',');
-
-if($sqlInsert){
-$sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES {$sqlInsert} ;";
-    mysqli_query($conn, $sql3);
-}
-
-
-// foreach ($selectsize as $key => $value) {
-//     $sql3 = "INSERT INTO sizeinfo (stud_id, item_name, size, quantity) VALUES ('" 
-//     . $conn->real_escape_string($id)."','"
-//     . $conn->real_escape_string($loopedname)."','"
-//     . $conn->real_escape_string($value)."','"
-//     . $conn->real_escape_string($quantity[$key])."')";
-// }
-
-// mysqli_query($conn, $sql3);
-
 
 header('Location:u_distribution.php');
 

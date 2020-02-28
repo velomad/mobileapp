@@ -128,11 +128,10 @@ if($_SESSION['schoolid']){
                 <label for="exampleFormControlSelect1">Select House</label>
                 <select class="form-control" name="selecthouse" id="exampleFormControlSelect1" required>
                     <option value="none" selected disabled hidden>Select House</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>Red</option>
+                    <option>Green</option>
+                    <option>Blue</option>
+                    <option>Yellow</option>
                 </select>
             </div>
 
@@ -148,12 +147,13 @@ if($_SESSION['schoolid']){
                 <p>Size Info</p>
             </div>
 
-            <?php while($row = mysqli_fetch_assoc($result)) { ?>
+            <?php $j=1; while($row = mysqli_fetch_assoc($result)) { ?>
             <div class="card  text-dark mt-5">
                 <div class="card-body">
             <div class="form-group">
+            <input type="hidden"  name="itemname<?php echo $j ?>" value="<?php echo $row['item_name'] ?>" >
                 <label for="exampleFormControlSelect1" name="studitem[]"><?php echo $row['item_name'] ?> </label>
-                <select class="form-control" name="selectsize[]" id="exampleFormControlSelect1">
+                <select class="form-control" name="selectsize<?php echo $j ?>" id="exampleFormControlSelect1">
                     <option value="Select Size">Select Size</option>
                     <?php for($i=1;$i<=15;$i++){ 
                        if($row['s'.$i]!=0){?>
@@ -170,16 +170,18 @@ if($_SESSION['schoolid']){
             <!-- <input type="number"  name="quantity" min="1" max="5" value="1" style="background-color: #ccc; border:none; text-align:center;"> -->
 
             <div class="contain">
-<input type="text" name="quantity[]" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
+<input type="text" name="quantity<?php echo $j ?>" class="qty" maxlength="12" value="0" class="input-text qty" style="text-align:center;" readonly />
 <div class="button-container mt-2">
     <button class="cart-qty-minus" type="button" value="-" style="width:87px; ">-</button>
-		<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
+	<button class="cart-qty-plus" type="button" value="+" style="width:87px;">+</button>
 </div>
 </div>
 
             </div>
             </div>
-            <?php } ?>
+            <?php $j++; } ?>
+
+            <input type="hidden" name="itemno" value="<?php echo $j-1;?>">
             <button name="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
         </form>
     </div>
