@@ -66,5 +66,7 @@ mysqli_query($conn, $updateSql);
 
 header('Location:u_distribution.php');
 
+
 ?>
+
 

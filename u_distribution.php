@@ -182,8 +182,9 @@ if($_SESSION['schoolid']){
             <?php $j++; } ?>
 
             <input type="hidden" name="itemno" value="<?php echo $j-1;?>">
-            <button name="submit" class="btn btn-primary mt-3 mb-3">Submit</button>
+            <button name="submit" id="btnUniformIssue" class="btn btn-primary mt-3 mb-3">Submit</button>
         </form>
+        
     </div>
                      <!-- <div class="qty mt-5">
                         <span class="minus bg-dark">-</span>
@@ -238,6 +239,7 @@ var incrementMinus = buttonMinus.click(function() {
 		$n.val(amount-1);
 	}
 });
+
                 </script>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
